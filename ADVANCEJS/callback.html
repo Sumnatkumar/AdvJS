@@ -1,0 +1,24 @@
+<!-- <script>
+    const funA = () => {
+        setTimeout(function() {
+            console.log(`welcome FuncA`);
+            funB();
+        }, 3000)
+    }
+
+    const funB = () => {
+        console.log(`welcome FuncB`);
+    }
+    funA();
+</script> -->
+<script>
+    const perOne = (friend, callfrnd) => {
+        console.log(`I am busy right Now. I am talking to ${friend}. I will call you back.`);
+        callfrnd();
+    }
+
+    const perTwo = () => {
+        console.log(`Hey what's up. I call back you dekha.`);
+    }
+    perOne("Sumant Kumar", perTwo);
+</script>

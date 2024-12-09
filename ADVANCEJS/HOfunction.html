@@ -1,0 +1,31 @@
+<script>
+    const interviewQuestions = (name) => {
+            if (name === "sumant") {
+                return function(topic) {
+                    console.log(`Hii ${name}.What is ${topic}?.Plz explain us.`);
+                }
+            }
+            if (name === "Kumar") {
+                return function(topic) {
+                    console.log(`Hii ${name}.What is ${topic}?.Plz explain us.`);
+                }
+            }
+            if (name === "sumantkumar") {
+                return function(topic) {
+                    console.log(`Hii ${name}.What is ${topic}?.Plz explain us.`);
+                }
+            } else {
+                return function() {
+                    console.log("Welcome to interview.");
+                }
+            }
+        }
+        //interviewQuestions("sumant")("UI");
+        //interviewQuestions("Kumar")("Full Stack Developer");
+        //interviewQuestions("sumantkumar")("Front End Developer");
+
+    const cand1 = interviewQuestions("sumant");
+    cand1("UI");
+    cand1("Ux");
+    cand1("Javascript");
+</script>

@@ -1,0 +1,41 @@
+<!-- From Mozilla MDN page about classes:
+
+Javascript classes, introduced in ECMAScript 2015, are primarily
+syntactical sugar over JavaScript's existing prototype-based
+inheritance.
+
+A class is a type of function , but intead of usong the keyword function to initiate it, we use the keyword class, and the properties are assigned inside a constructor() method.
+
+// For OPPS
+A class is a user defined blueprint or proptype from which objects are created. It represents the set of properties or methods that are common to all objects of one type. -->
+
+<script>
+
+
+    class Students{
+        constructor(name,age,cls){
+            this.myname = name;
+            this.myage = age;
+            this.mycls = cls;
+        }
+        //instance method
+        biodata(){
+            return `Hi My name is a ${this.myname}. I am ${this.myage} years old and I am in class ${this.mycls}`;
+        }
+    }
+
+    class Player extends Students{
+        constructor(name,age,cls,game){
+            super(name,age,cls);
+            this.mygame = game;
+        }
+        play_biodata(){
+            return `${super.biodata()}. I am player of ${this.mygame}`;
+        }
+    }
+
+    let obj1 = new Player('Sumant',23,'B.E','Football');
+
+    console.log(obj1.play_biodata());
+
+</script>

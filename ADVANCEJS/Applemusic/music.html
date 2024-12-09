@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Music Player</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">LOTUS LANE</h2>
+            <h3 id="artist">The Loyalist</h3>
+            <div class="img_container">
+                <img src="images/Sumantgp1.jpg" alt=""/>
+            </div>
+            <audio src="music/Sumantgp1.mp3"></audio>
+
+            <!-- Progress bar -->
+             <div class="progressbar_container" id="progress_container">
+                <div class="progress_duration_meter">
+                    <div id="current_time">0:00</div>
+                    <div id="duration">0:00</div>
+                </div>
+                <div class="progress_div" id="progress_div">
+                    <div class="progress" id="progress"></div>
+                </div>
+             </div>
+
+            <!-- Controls -->
+             <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+                <i class="fas fa-play main_button" id="play" title="Play"></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+             </div>
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const title = document.getElementById("title");
+        const artist = document.getElementById("artist");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const progress = document.getElementById("progress");
+        const total_duration = document.getElementById("duration");
+        const current_time = document.getElementById("current_time");
+        const progress_div = document.getElementById("progress_div");
+
+        const songs = [
+            {
+                name: "Sumantgp1",
+                title: "Ale Ab Jo Bhi Ho",
+                artist: "Neeraj Shridhar, A Mitra",
+            },
+            {
+                name: "Sumantgp2",
+                title: "Matargashti",
+                artist: "Mohit Chauhan, A.R. Rahman",
+            },
+            {
+                name: "Sumantgp3",
+                title: "Woh Din",
+                artist: "Arijit Singh",
+            },
+            {
+                name: "Sumantgp4",
+                title: "Kashmir Main Tu",
+                artist: "S.Chauhan,A.Singh,N.Mohan",
+            },
+        ];
+
+        let isPlaying = false;
+        let songIndex = 0;
+
+        const playMusic = () => {
+            isPlaying = true;
+            music.play();
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        };
+
+        const pauseMusic = () => {
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener("click", () => {
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+        // Function to load a song
+        const loadSong = (song) => {
+            title.textContent = song.title;
+            artist.textContent = song.artist;
+            music.src = `music/${song.name}.mp3`;
+            img.src = `images/${song.name}.jpg`;
+        };
+
+        const nextSong = () => {
+            songIndex = (songIndex + 1) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+
+        const prevSong = () => {
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        };
+
+        // Progress bar functionality
+        music.addEventListener("timeupdate", () => {
+            const { currentTime, duration } = music;
+
+            if (duration) {
+                const progress_time = (currentTime / duration) * 100;
+                progress.style.width = `${progress_time}%`;
+
+                // Update total duration
+                const min_duration = Math.floor(duration / 60);
+                const sec_duration = Math.floor(duration % 60).toString().padStart(2, "0");
+                total_duration.textContent = `${min_duration}:${sec_duration}`;
+            }
+
+            // Update current time
+            const min_currentTime = Math.floor(currentTime / 60);
+            const sec_currentTime = Math.floor(currentTime % 60).toString().padStart(2, "0");
+            current_time.textContent = `${min_currentTime}:${sec_currentTime}`;
+        });
+
+        // Progress bar click functionality
+        progress_div.addEventListener("click", (event) => {
+            const { duration } = music;
+            const clickX = event.offsetX;
+            const width = event.target.clientWidth;
+            const newTime = (clickX / width) * duration;
+
+            music.currentTime = newTime;
+        });
+
+        // If music ends, play the next song
+        music.addEventListener("ended", nextSong);
+
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+
+        // Load the first song by default
+        loadSong(songs[songIndex]);
+    </script>
+</body>
+</html>
